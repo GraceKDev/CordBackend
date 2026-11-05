@@ -37,7 +37,7 @@ public sealed class CoordinateController(CordDbContext dbContext) : ControllerBa
         }
         return Ok(await GetCoordinateExportAsync(user.Id, cancellationToken));
     }
-    
+
     [HttpPost]
     [ProducesResponseType<CoordinateExportDTO>(StatusCodes.Status200OK)]
     [ProducesResponseType<ProblemDetails>(StatusCodes.Status401Unauthorized)]
@@ -61,16 +61,22 @@ public sealed class CoordinateController(CordDbContext dbContext) : ControllerBa
                     Title = "User has not been registered."
                 });
         }
+
+        var incomingCoordinate = export.Coordinates
+        .DistinctBy(dto => (dto.Latitude, dto.Longitude))
+        .ToList();
+        var incomingLatitudes = incomingCoordinate.Select(dto => dto.Latitude).ToList();
         var existingCoordinates = await dbContext.Coordinates
             .AsNoTracking()
-            .Where(coordinate => coordinate.UserId == user.Id)
+            .Where(coordinate => coordinate.UserId == user.Id
+                && incomingLatitudes.Contains(coordinate.Latitude))
             .Select(coordinate => new { coordinate.Latitude, coordinate.Longitude })
             .ToListAsync(cancellationToken);
         var coordinateSet = existingCoordinates
             .Select(coordinate => (coordinate.Latitude, coordinate.Longitude))
             .ToHashSet();
 
-        var coordinates = export.Coordinates
+        var coordinates = incomingCoordinate
             .Where(dto => coordinateSet.Add((dto.Latitude, dto.Longitude)))
             .Select(dto => new Coordinate
             {

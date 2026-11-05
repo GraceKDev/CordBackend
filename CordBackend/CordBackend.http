@@ -1,0 +1,50 @@
+@CordBackend_HostAddress = http://localhost:5104
+@googleIdToken = replace-with-google-id-token
+
+### Check API and PostgreSQL health
+GET {{CordBackend_HostAddress}}/api/health
+Accept: application/json
+
+###
+
+### Get the authenticated user's coordinates and routes
+GET {{CordBackend_HostAddress}}/api/coordinates
+Accept: application/json
+Authorization: Bearer {{googleIdToken}}
+
+###
+
+### Import coordinates and routes for the authenticated user
+POST {{CordBackend_HostAddress}}/api/coordinates
+Content-Type: application/json
+Authorization: Bearer {{googleIdToken}}
+
+{
+  "coordinates": [
+    {
+      "latitude": 47.6205,
+      "longitude": -122.3493,
+      "date": "2026-11-04T10:00:00Z"
+    }
+  ],
+  "routes": [
+    {
+      "name": "Morning walk",
+      "date": "2026-11-04",
+      "coordinates": [
+        {
+          "latitude": 47.6205,
+          "longitude": -122.3493,
+          "date": "2026-11-04T10:00:00Z"
+        },
+        {
+          "latitude": 47.6210,
+          "longitude": -122.3500,
+          "date": "2026-11-04T10:05:00Z"
+        }
+      ]
+    }
+  ]
+}
+
+###

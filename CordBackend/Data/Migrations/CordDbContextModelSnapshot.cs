@@ -36,6 +36,18 @@ namespace CordBackend.Data.Migrations
                         .HasColumnType("text")
                         .HasColumnName("date");
 
+                    b.Property<bool>("HasImage")
+                        .HasColumnType("boolean")
+                        .HasColumnName("has_image");
+
+                    b.Property<string>("ImageId")
+                        .HasColumnType("text")
+                        .HasColumnName("image_id");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text")
+                        .HasColumnName("image_url");
+
                     b.Property<double>("Latitude")
                         .HasColumnType("double precision")
                         .HasColumnName("latitude");
@@ -47,6 +59,10 @@ namespace CordBackend.Data.Migrations
                     b.Property<int?>("RouteId")
                         .HasColumnType("integer")
                         .HasColumnName("route_id");
+
+                    b.Property<bool>("UploadedSuccessfully")
+                        .HasColumnType("boolean")
+                        .HasColumnName("uploaded_successfully");
 
                     b.Property<int>("UserId")
                         .HasColumnType("integer")

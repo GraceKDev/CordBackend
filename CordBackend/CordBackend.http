@@ -24,7 +24,8 @@ Authorization: Bearer {{googleIdToken}}
     {
       "latitude": 47.6205,
       "longitude": -122.3493,
-      "date": "2026-11-04T10:00:00Z"
+      "date": "2026-11-04T10:00:00Z",
+      "hasImage": true
     }
   ],
   "routes": [

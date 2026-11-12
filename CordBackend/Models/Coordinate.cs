@@ -15,7 +15,17 @@ public class Coordinate
     public double Longitude { get; set; }
 
     [Column("date")]
+    
     public string Date { get; set; } = string.Empty;
+    [Column("has_image")]
+    public bool HasImage { get; set; } = false;
+    [Column("uploaded_successfully")]
+    public bool UploadedSuccessfully { get; set; } = false;
+    [Column("image_id")]
+    public string? ImageId { get; set; } = string.Empty;
+
+    [Column("image_url")]
+    public string? ImageUrl { get; set; }
 
     [ForeignKey(nameof(User))]
     [Column("user_id")]

@@ -10,4 +10,8 @@ public class CoordinateDTO
     [Range(-180d, 180d)]
     public double Longitude { get; set; }
     public string Date { get; set; } = string.Empty;
+    public bool HasImage { get; set; } = false;
+    public string? ImageId { get; set; }
+    public string? ImageUrl { get; set; }
+    public bool UploadedSuccessfully { get; set; } = false;
 }
